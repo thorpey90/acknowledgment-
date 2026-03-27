@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { margin: 0; padding: 0; font-family: 'DM Sans', sans-serif; background: #f9f6f1; }
+  html, body { margin: 0; padding: 0; background: #f9f6f1; overflow: hidden; }
 
   .aoc {
     width: 100%;
@@ -18,22 +18,13 @@
   .aoc-inner {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 clamp(24px, 6vw, 80px);
-  }
-
-  /* ── Trigger ── */
-  .aoc-trigger {
-    padding: 16px 0 14px;
-    cursor: pointer;
-    user-select: none;
-    transition: opacity 0.18s;
+    padding: clamp(20px, 3vw, 32px) clamp(24px, 6vw, 80px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
+    text-align: center;
   }
-
-  .aoc-trigger:hover { opacity: 0.5; }
 
   .aoc-tag {
     display: inline-flex;
@@ -49,38 +40,7 @@
     text-transform: uppercase;
   }
 
-  .aoc-headline {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: clamp(16px, 1.8vw, 21px);
-    color: #5a534e;
-    line-height: 1.4;
-    letter-spacing: 0.01em;
-    text-align: center;
-  }
-
-  /* ── Expandable ── */
-  .aoc-body {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.45s ease;
-  }
-
-  .aoc.open .aoc-body { grid-template-rows: 1fr; }
-
-  .aoc-body-inner { overflow: hidden; }
-
-  /* ── Paragraphs — same style as headline ── */
-  .aoc-paragraphs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    padding: 4px 0 20px;
-    text-align: center;
-  }
-
-  .aoc-paragraphs p {
+  .aoc-text {
     font-family: 'Lora', serif;
     font-style: italic;
     font-size: clamp(16px, 1.8vw, 21px);
@@ -88,53 +48,28 @@
     line-height: 1.6;
     letter-spacing: 0.01em;
     max-width: 680px;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
   }
-
-  .aoc.open .aoc-paragraphs p { opacity: 1; transform: translateY(0); }
-  .aoc.open .aoc-paragraphs p:nth-child(2) { transition-delay: 0.08s; }
-  .aoc.open .aoc-paragraphs p:nth-child(3) { transition-delay: 0.16s; }
-
 </style>
 </head>
 <body>
 
-<div class="aoc" id="aoc">
+<div class="aoc">
   <div class="aoc-inner">
-
-    <div class="aoc-trigger" onclick="toggleAoc()" role="button" aria-expanded="false">
-      <span class="aoc-tag">Acknowledgement of Country</span>
-      <span class="aoc-headline">Before there were classrooms, stories lived in the land.</span>
-    </div>
-
-    <div class="aoc-body">
-      <div class="aoc-body-inner">
-        <div class="aoc-paragraphs" onclick="toggleAoc()" style="cursor: pointer;">
-          <p>We acknowledge the Wurundjeri people of the Kulin Nation as the Traditional Owners of the land where we work and learn.</p>
-          <p>We honour Elders past and present, and recognise their continuing role as educators, sharing knowledge, wisdom and care for Country.</p>
-          <p>We extend our respect to all Aboriginal and Torres Strait Islander peoples.</p>
-        </div>
-      </div>
-    </div>
-
+    <span class="aoc-tag">Acknowledgement of Country</span>
+    <p class="aoc-text">Before there were classrooms, stories lived in the land.</p>
+    <p class="aoc-text">We acknowledge the Wurundjeri people of the Kulin Nation as the Traditional Owners of the land where we work and learn.</p>
+    <p class="aoc-text">We honour Elders past and present, and recognise their continuing role as educators, sharing knowledge, wisdom and care for Country.</p>
+    <p class="aoc-text">We extend our respect to all Aboriginal and Torres Strait Islander peoples.</p>
   </div>
 </div>
 
 <script>
-  function toggleAoc() {
-    const aoc = document.getElementById('aoc');
-    const isOpen = aoc.classList.toggle('open');
-    aoc.querySelector('.aoc-trigger').setAttribute('aria-expanded', isOpen);
-    setTimeout(reportHeight, 480);
-  }
-
   function reportHeight() {
-    window.parent.postMessage({ type: 'aoc-height', height: document.body.scrollHeight }, '*');
+    const h = Math.ceil(document.querySelector('.aoc').getBoundingClientRect().height);
+    window.parent.postMessage({ type: 'aoc-height', height: h }, '*');
   }
-
   window.addEventListener('load', reportHeight);
+  window.addEventListener('resize', reportHeight);
 </script>
 
 </body>
