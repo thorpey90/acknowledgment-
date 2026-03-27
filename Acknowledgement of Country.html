@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acknowledgement of Country</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { margin: 0; padding: 0; font-family: 'DM Sans', sans-serif; background: #f9f6f1; }
+
+  /* ── Wrapper ── */
+  .aoc {
+    width: 100%;
+    background: #f9f6f1;
+    border-top: 1px solid #e8e3dc;
+  }
+
+  .aoc-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 6vw, 80px);
+  }
+
+  /* ── Trigger strip ── */
+  .aoc-trigger {
+    padding: 16px 0 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: opacity 0.18s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .aoc-trigger:hover { opacity: 0.5; }
+
+  /* HubSpot-style section label chip */
+  .aoc-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border: 1px solid #d4cfc8;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #8a837c;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .aoc-headline {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(16px, 1.8vw, 21px);
+    color: #5a534e;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+
+  /* ── Expandable ── */
+  .aoc-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s ease;
+  }
+
+  .aoc.open .aoc-body { grid-template-rows: 1fr; }
+
+  .aoc-body-inner { overflow: hidden; }
+
+  /* ── White card ── */
+  .aoc-card {
+    background: #ffffff;
+    border: 1px solid #e8e3dc;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.03), 0 4px 20px rgba(0,0,0,0.05);
+    margin-bottom: 16px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .aoc-card:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05), 0 8px 28px rgba(0,0,0,0.08);
+    background: #fdfcfb;
+  }
+
+  /* Card inner */
+  .aoc-card-content {
+    padding: 32px 44px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Card slot */
+  .aoc-slot {
+    position: relative;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+  }
+
+  .aoc-para {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: clamp(22px, 2.8vw, 34px);
+    font-weight: 400;
+    color: #1f1f1f;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+
+  .aoc-para.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Pill indicators — centered, active dot stretches to a dash */
+  .aoc-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .aoc-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 100px;
+    background: #d4cfc8;
+    transition: background 0.35s ease, width 0.35s ease;
+  }
+
+  .aoc-dot.active {
+    width: 20px;
+    background: #5a534e;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 680px) {
+    .aoc-card-content { padding: 24px 22px 20px; }
+    .aoc-slot { min-height: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="aoc" id="aoc">
+  <div class="aoc-inner">
+
+    <div class="aoc-trigger" onclick="toggleAoc()" role="button" aria-expanded="false">
+      <span class="aoc-tag">Acknowledgement of Country</span>
+      <span class="aoc-headline">Before there were classrooms, stories lived in the land.</span>
+    </div>
+
+    <div class="aoc-body">
+      <div class="aoc-body-inner">
+        <div class="aoc-card" onclick="nextSlide()">
+
+          <div class="aoc-card-content">
+            <div class="aoc-slot">
+              <p class="aoc-para active">We acknowledge the Wurundjeri people of the Kulin Nation as the Traditional Owners of the land where we work and learn.</p>
+              <p class="aoc-para">We honour Elders past and present, and recognise their continuing role as educators, sharing knowledge, wisdom and care for Country.</p>
+              <p class="aoc-para">We extend our respect to all Aboriginal and Torres Strait Islander peoples.</p>
+            </div>
+            <div class="aoc-dots">
+              <span class="aoc-dot active"></span>
+              <span class="aoc-dot"></span>
+              <span class="aoc-dot"></span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  let current = 0;
+
+  const paras = document.querySelectorAll('.aoc-para');
+  const dots  = document.querySelectorAll('.aoc-dot');
+
+  function goTo(n) {
+    paras[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = n;
+    paras[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function nextSlide() {
+    goTo((current + 1) % paras.length);
+  }
+
+  function toggleAoc() {
+    const aoc = document.getElementById('aoc');
+    const isOpen = aoc.classList.toggle('open');
+    aoc.querySelector('.aoc-trigger').setAttribute('aria-expanded', isOpen);
+    if (isOpen) goTo(0);
+  }
+</script>
+
+</body>
+</html>
